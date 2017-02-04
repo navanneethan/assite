@@ -1,0 +1,76 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin2.Master.cs" Inherits="AntiClockFitnessCentre.Admin.Admin" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <meta charset="UTF-8" />
+
+    <link href="../css/normalize.css" rel="stylesheet" />
+    <link rel='stylesheet prefetch' href='https://s3-us-west-2.amazonaws.com/s.cdpn.io/6035/grid.css' />
+    <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Montserrat' />
+    <link rel='stylesheet prefetch' href='https://s3-us-west-2.amazonaws.com/s.cdpn.io/6035/icomoon-scrtpxls.css' />
+
+    <link href="../css/style.css" rel="stylesheet" />
+    <script src="../js/prefixfree.min.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <div class="container">
+                <div class="grid_4">
+                    <section class="box widget locations">
+                        <div class="avatar">
+
+                            <img src="../ProfileImage/9940497432.jpg" height="175" width="175" />
+                        </div>
+                        <div class="details">
+                            <h2>Name</h2>
+                            <p>Alexy Masilamani</p>
+                        </div>
+                        <nav class="box nav">
+                            <ul>
+                                <li>
+                                    <a href="UserDetails.aspx">
+                                        <span class="title">Add User Details</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ViewUserDetails.aspx">
+
+                                        <span class="title">View User Details</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+
+                                        <span class="title">Add Message</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+
+                                        <span class="title">View Message</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </section>
+                </div>
+                <div class="grid_8">
+                    <article class="box">
+                          <div  class="details">         
+    
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                              </div>
+                        </article>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

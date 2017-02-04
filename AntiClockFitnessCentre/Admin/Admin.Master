@@ -1,0 +1,179 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.Master.cs" Inherits="AntiClockFitnessCentre.Admin.Admin1" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<%--    Validation Tools--%>
+
+      <link href="../css/Validation/customMessages.css" rel="stylesheet" />
+    <link href="../css/Validation/template.css" rel="stylesheet" />   
+    <script src="../js/Validations/jquery-1.8.2.min.js"></script>
+     <link href="../css/Validation/validationEngine.jquery.css" rel="stylesheet" />
+     
+    <script src="../js/Validations/jquery.validationEngine.js"></script>
+    <script src="../js/Validations/jquery.validationEngine-en.js"></script>
+    	
+
+    <script>
+        var jq13 = jQuery.noConflict(true);
+</script>
+     <script>
+         jq13(document).ready(function () {
+             // binds form submission and fields to the validation engine
+             jq13("#form1").validationEngine();
+         });
+        </script>
+
+    <%--    Validation Tools--%>
+   <link href="../css/bootstrap-modal-carousel.min.css" rel="stylesheet" />
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+  
+    <link href="../css/fitness.css" rel="stylesheet" />
+  
+    <script src="../js/jquery-1.11.2.min.js"></script>
+  
+    <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/bootstrap-modal-carousel.min.js"></script>
+     
+    
+  
+    <script>
+        $(".nav a").on("click", function () {
+            if ($("li").hasClass('active')) {
+                $("li").removeClass('active');
+            }
+            $(this).addClass('active');
+        });
+</script>
+    
+  <%-- <script>
+       jQuery(document).ready(function () {
+           // binds form submission and fields to the validation engine
+           $(".successMsg").hide();
+           $(".errorMsg").hide();
+           
+       });
+   </script>--%>
+
+     <style>
+     
+
+
+
+ </style>
+
+    
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body style=" margin-top: 0px;">
+    <form id="form1" data-toggle="validator" runat="server">
+        <div>
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <% if (Session["CompanyName"] != null)
+                           { %>
+                        <a class="navbar-brand navbar-brand-centered" href="HomePage.aspx"><%=Session["CompanyName"].ToString()%></a>
+                        <% } %>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Masters <span class="caret"></span></a>
+                                <ul class="dropdown-menu multi-level" role="menu">
+                                    <li class="dropdown-submenu">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Users</a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="../Admin/UserDetails.aspx">Add User</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="../Admin/ViewUserDetails.aspx">View User</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-submenu">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Achievements</a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="../Admin/AchievementMaster.aspx">Achievements Master</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="../Admin/Achiever.aspx">Manage Achievements</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-submenu">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Polls</a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="../Admin/AddOpinionPoll.aspx">Add Poll</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="../Admin/ViewOpinionPoll.aspx">View Poll</a></li>
+                                        </ul>
+                                    </li>
+                                     <li class="divider"></li>
+                                     <li><a href="../Admin/ScheduleEvents.aspx">Events</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Trainee Data <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                            <li><a href="../Admin/EvalutionResult.aspx">Evalution</a></li>
+                                <li class="divider"></li>
+                            <li><a href="../Admin/FileUploads.aspx">Uploads</a></li>
+                                <li class="divider"></li>
+                            <li><a href="../Admin/Schedule.aspx">Schedule</a></li>
+                                </ul>
+                                </li>
+                            <li><a href="../Admin/AdminMessage.aspx">Message</a></li>
+                            <li><a href="../ChangePassword.aspx">Settings</a></li>
+
+
+                          
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="../Logout.aspx">Logout</a></li>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.container-fluid -->
+            </nav>
+            <div class="container">
+                <div class="col-md-3">
+                    <section class="box widget locations">
+                         <div class="avatar">
+                            <asp:Image ID="imgProfileImage" runat="server" Width="175" Height="175" />
+                            <%--<img src="../images/nomale.png" height="175" width="175" />--%>
+                        </div>
+                        <div class="details">
+                            <div class="htitle" >Name</div>
+                            <p><asp:Label ID="lblUserName" runat="server"></asp:Label></p>
+
+                        </div>
+                        
+                    </section>
+                </div>
+                <div class="col-md-9">
+                    <article class="contentbox">
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

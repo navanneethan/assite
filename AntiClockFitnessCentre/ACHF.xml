@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ACHF>
+	<NewUser>
+		<Subject>Account created</Subject>
+		<Body>
+			<p>Your account is successfully created. Your password is <b>{0}</b>
+		</p>
+		</Body>
+	</NewUser>
+	<Course>
+		<Subject>
+			Mr/Ms {0} Course Interested</Subject>
+		<Body>
+			<p>
+				<b>Mr/Ms {0}</b> is interested in the course <b>{1}</b>.
+			</p>
+		</Body>
+	</Course>
+</ACHF>
