@@ -1,0 +1,310 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="TrainerNew.master.cs" Inherits="AntiClockFitnessCentre.Trainer.TrainerNew" %>
+<%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+    <link href="../css/fitness.css" rel="stylesheet" />
+    <script src="../js/jquery-1.11.2.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+    <%--    Validation Tools--%>
+    <link href="../css/Validation/customMessages.css" rel="stylesheet" />
+    <link href="../css/Validation/template.css" rel="stylesheet" />
+    <link href="../css/Validation/validationEngine.jquery.css" rel="stylesheet" />
+    <script src="../js/Validations/jquery.validationEngine.js"></script>
+    <script src="../js/Validations/jquery.validationEngine-en.js"></script>
+    <script>
+        var selDiv = "";
+        document.addEventListener("DOMContentLoaded", init, false);
+        function init() {
+            document.querySelector('#files1').addEventListener('change', handleFileSelect, false);
+        }
+        $(document).bind('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        function handleFileSelect(evt) {
+            var files = evt.target.files; // FileList object
+            // Loop through the FileList and render image files as thumbnails.
+            for (var i = 0, f; f = files[i]; i++) {
+                // Only process image files.
+                if (!f.type.match('image.*')) {
+                    continue;
+                }
+                var reader = new FileReader();
+                // Closure to capture the file information.
+                reader.onload = (function (theFile) {
+                    return function (e) {
+                        // Render thumbnail.
+                        var span = document.createElement('li');
+                        span.innerHTML = ['<img class="thumbnail"  width="107" height="90" src="', e.target.result,
+                                          '" title="', escape(theFile.name), '"/>'].join('');
+                        document.querySelector('#selectedFiles1').insertBefore(span, null);
+                    };
+                })(f);
+
+                // Read in the image file as a data URL.
+                reader.readAsDataURL(f);
+            }
+        }
+    </script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div style="margin-right: 10px;">
+                <div class="navbar-header">
+                    <a href="../Trainer/HomePage.aspx" class="navbar-brand">Home</a>
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <% if (Session["CompanyName"] != null)
+                   { %>
+                <a class="navbar-brand navbar-brand-centered" href="HomePage.aspx"><%=Session["CompanyName"].ToString()%></a>
+                <% } %>
+                <div class="navbar-collapse collapse" id="navbar-main">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="../Admin/FileUploads.aspx">Reports</a>
+                        </li>
+                        <li>
+                            <a href="../Trainer/TrainerMessage.aspx">Messages</a>
+                        </li>
+                        <li>
+                            <a href="../Trainer/EditUserDetails.aspx">Edit User</a>
+                        </li>
+                        <li>
+                            <a href="../ChangePassword.aspx">Settings</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="../Logout.aspx">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 60px;">
+            <div class="col-lg-3">
+                <section class="box widget locations">
+
+                    <div class="avatar">
+                        <%--<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/6035/scrtpxls_location.png"  /> --%>
+                        <asp:Image ID="imgProfileImage" runat="server" Width="175" Height="175" />
+                    </div>
+                    <br />
+                    <div class="details">
+                        <table style="width: 100%" class="table table-responsive">
+                            <tr>
+                                <th>Name
+                                </th>
+                                <td>:
+                                </td>
+                                <td>
+                                    <p>
+                                        <asp:Label runat="server" ID="lblUsername"></asp:Label>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Age
+                                </th>
+                                <td>:
+                                </td>
+                                <td>
+                                    <p>
+                                        <asp:Label runat="server" ID="lblAge"></asp:Label>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Gender
+                                </th>
+                                <td>:
+                                </td>
+                                <td>
+                                    <p>
+                                        <asp:Label runat="server" ID="lblGender"></asp:Label>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Height
+                                </th>
+                                <td>:
+                                </td>
+                                <td>
+                                    <p>
+                                        <asp:Label runat="server" ID="lblheight"></asp:Label>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Weight
+                                </th>
+                                <td>:
+                                </td>
+                                <td>
+                                    <p>
+                                        <asp:Label runat="server" ID="lblweight"></asp:Label>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                </section>
+            </div>
+            <div class="col-lg-6">
+                <article class="contentbox">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </article>
+            </div>
+            <div class="col-lg-3">
+                <section class="box widget locations">
+                    <div class="details">
+                        <h2>Achiver of the Month</h2>
+                        <div class="errorMsg" id="errorMsgAchiever" visible="false" runat="server">
+                            <asp:Label ID="lblerrorAchiever" runat="server" Text=""></asp:Label>
+                        </div>
+                        <asp:UpdatePanel ID="UpdatePanel1" UpdateMode="Conditional" ChildrenAsTriggers="true" runat="server">
+                            <ContentTemplate>
+                                <asp:Repeater ID="repTopAchiever" runat="server">
+                                    <ItemTemplate>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <td colspan="3" style="text-align: center">
+                                                            <div class="avatar">
+                                                                <asp:Image ID="imgUser" runat="server" EnableViewState="False" Width="105" Height="105" ImageUrl='<%# "../Admin/ProfileImage.ashx?id="+ Eval("AchieverUserId") %>' />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </thead>
+                                                <tr>
+
+                                                    <th>Achiver 
+                                                    </th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <p>
+                                                            <asp:Label ID="lblTopAchiever" runat="server" Text='<%# Eval("FullName") %>'></asp:Label>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Category</th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <p>
+                                                            <asp:Label ID="Label1" runat="server" Text='<%# Eval("AchieverMasterDetails") %>'></asp:Label>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Month</th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <p>
+                                                            <asp:Label ID="Label4" runat="server" Text='<%# String.Format("{0:MMMM/yyyy}" , Convert.ToDateTime(Eval("AchievedMonthFor"))) %>'></asp:Label>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Record</th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <p>
+                                                            <asp:Label ID="Label2" runat="server" Text='<%# Eval("AchievedNumber") %>'></asp:Label>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </ItemTemplate>
+                                    <SeparatorTemplate>
+                                    </SeparatorTemplate>
+                                </asp:Repeater>
+
+                                <asp:HiddenField ID="CurrentPage" Value="1" runat="server" />
+                                <asp:HiddenField ID="PageSize" Value="1" runat="server" />
+                                <asp:HiddenField ID="TotalSize" runat="server" />
+                                <asp:LinkButton ID="Prev" Text="<< Previous" CssClass="btn btn-info btn-xs active" OnClick="Page_Repeater" runat="server" />
+                                &nbsp;
+                        <asp:LinkButton ID="Next" Text="Next >>" CssClass="btn btn-info btn-xs active" OnClick="Page_Repeater" runat="server" />
+                            </ContentTemplate>
+                            <Triggers>
+                                <asp:AsyncPostBackTrigger ControlID="Prev" />
+                                <asp:AsyncPostBackTrigger ControlID="Next" />
+                            </Triggers>
+
+                        </asp:UpdatePanel>
+                    </div>
+                </section>
+                <section class="box widget locations">
+                    <div class="details">
+                        <h2>Voting</h2>
+                        <div class="errorMsg" id="errorMsgPoll" visible="false" runat="server">
+                            <asp:Label ID="lblerrorPoll" runat="server" Text=""></asp:Label>
+                        </div>
+                        <asp:UpdatePanel ID="UpdatePanel2" UpdateMode="Conditional" ChildrenAsTriggers="true" runat="server">
+                            <ContentTemplate>
+                                <asp:DataList ID="dlstPoll" runat="server" DataKeyField="PollId" CssClass="table table-condensed" OnItemCommand="dlstPoll_ItemCommand" OnItemDataBound="dlstPoll_ItemDataBound">
+                                    <ItemTemplate>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <asp:HiddenField ID="hddAttended" Value='<%# Eval("IsAttended") %>' runat="server" />
+                                                    <asp:Image runat="server" class="form-control" ImageUrl='<%# Eval("PollImage") %>' Visible="false" ID="imgPollpic" Width="260" Height="236" ImageAlign="Top" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <asp:Label ID="Label3" runat="server" Text='<%# Eval("PollQuestion") %>'></asp:Label>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <asp:RadioButtonList ID="rblPollOptions" runat="server" CssClass="radio"></asp:RadioButtonList>
+                                                    <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary" CommandArgument='<%# Eval("PollId") %>' CommandName="SubmitPoll" OnClick="btnSubmit_Click" Text="submit" />
+                                                </td>
+                                            </tr>
+                                    </ItemTemplate>
+                                </asp:DataList>
+                                <asp:HiddenField ID="CurrentPagePoll" Value="1" runat="server" />
+                                <asp:HiddenField ID="PageSizePoll" Value="1" runat="server" />
+                                <asp:HiddenField ID="TotalSizePoll" runat="server" />
+                                <asp:LinkButton ID="PrevPoll" Text="<< Previous" CssClass="btn btn-info btn-xs active" OnClick="PagePoll_Repeater" runat="server" />
+                                &nbsp;
+                        <asp:LinkButton ID="NextPoll" Text="Next >>" CssClass="btn btn-info btn-xs active" OnClick="PagePoll_Repeater" runat="server" />
+                            </ContentTemplate>
+                            <Triggers>
+                                <asp:AsyncPostBackTrigger ControlID="PrevPoll" />
+                                <asp:AsyncPostBackTrigger ControlID="NextPoll" />
+                            </Triggers>
+
+                        </asp:UpdatePanel>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <asp:HiddenField ID="hddId" runat="server" />
+
+    </form>
+</body>
+</html>

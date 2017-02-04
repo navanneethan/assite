@@ -1,0 +1,888 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="TraineeNew.master.cs" Inherits="AntiClockFitnessCentre.Trainee.TraineeNew" %>
+
+<%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+
+    <link href="../css/fitness.css" rel="stylesheet" />
+
+    <script src="../js/jquery-1.11.2.min.js"></script>
+
+    <script src="../js/bootstrap.min.js"></script>
+    <link href="../css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script type="text/javascript">
+        function ShowPreview(input) {
+            if (input.files && input.files[0]) {
+                var ImageDir = new FileReader();
+                ImageDir.onload = function (e) {
+                    $('#imgProfilepic').attr('border-radius', '50%');
+                    $('#imgProfilepic').attr('src', e.target.result);
+                }
+                ImageDir.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+    <script>
+        var selDiv = "";
+
+        document.addEventListener("DOMContentLoaded", init, false);
+
+        function init() {
+
+            document.querySelector('#files1').addEventListener('change', handleFileSelect, false);
+        }
+
+        function handleFileSelect(evt) {
+
+            var files = evt.target.files; // FileList object
+
+            // Loop through the FileList and render image files as thumbnails.
+            for (var i = 0, f; f = files[i]; i++) {
+
+                // Only process image files.
+                if (!f.type.match('image.*')) {
+                    continue;
+                }
+
+                var reader = new FileReader();
+
+                // Closure to capture the file information.
+                reader.onload = (function (theFile) {
+                    return function (e) {
+                        // Render thumbnail.
+                        var span = document.createElement('li');
+                        span.innerHTML = ['<img class="thumbnail"  width="107" height="90" src="', e.target.result,
+                                          '" title="', escape(theFile.name), '"/>'].join('');
+                        document.querySelector('#selectedFiles1').insertBefore(span, null);
+                    };
+                })(f);
+
+                // Read in the image file as a data URL.
+                reader.readAsDataURL(f);
+            }
+        }
+
+
+    </script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div style="margin-right: 10px;">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <% if (Session["CompanyName"] != null)
+                   { %>
+                <a class="navbar-brand" href="HomePage.aspx"><%=Session["CompanyName"].ToString()%></a>
+                <% } %>
+                <div class="navbar-collapse collapse" id="navbar-main">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="../Trainee/PDF.aspx">Reports</a>
+                        </li>
+                        <li>
+                            <a href="../Trainee/TraineeMessages.aspx">Message</a>
+                        </li>
+                        <li>
+                            <a href="#" data-backdrop="static" data-toggle="modal" data-target="#pollHistoryModal">Poll History</a>
+                        </li>
+                        <li class="active" id="liNotificationCount" runat="server">
+                            <%-- <asp:LinkButton data-backdrop="static" data-toggle="modal" data-target="#NotificationModal" OnClick="lnkbtnNotification_Click" runat="server" ID="lnkbtnNotification" >Notification  <span id="spnNotificationCount" runat="server" class="badge"></span></asp:LinkButton>--%>
+                            <a href="#" data-backdrop="static" data-toggle="modal" data-target="#NotificationModal">Notification  <span id="spnNotificationCount" runat="server" class="badge"></span></a>
+                        </li>
+                        <li>
+                            <a href="../ChangePassword.aspx">Settings</a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="../Logout.aspx">Logout</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 60px; margin-left: 0px; margin-right: 0px;">
+            <div class="col-lg-3">
+                <section class="box widget locations">
+                    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+                    </asp:ScriptManager>
+
+                    <div id="NotificationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="NotificationModalLabel" data-backdrop="static"
+                        data-keyboard="false" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <asp:Button CssClass="close" data-dismiss="modal" runat="server" aria-hidden="true" ID="btnNotifyClose" ClientIDMode="Static" Text="&times;" />
+                                    <%-- <button type="button" class="close" data-dismiss="modal" runat="server" aria-hidden="true">&times;</button> OnClientClick="SaveNotification()"--%>
+                                    <h4 id="NotificationModalLabel">Notification</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="errorMsg" id="Div1" visible="false" runat="server">
+                                        <asp:Label ID="Label5" runat="server" Text=""></asp:Label>
+                                    </div>
+                                    <div id="divModalBody" runat="server" style="height: 500px; overflow-y: scroll">
+                                        <asp:DataList ID="dlistNotification" runat="server" DataKeyField="ScheduleID" CssClass="table table-responsive" RepeatDirection="Vertical" RepeatColumns="1">
+                                            <ItemTemplate>
+                                                <div class="list-group">
+                                                    <div class="list-group-item">
+                                                        <h2><%# Eval("ScheduleDetails") %></h2>
+                                                        <br />
+                                                        <span class="glyphicon glyphicon-calendar"></span>From <span><%# String.Format("{0:dd MMMM yyyy}" , Convert.ToDateTime(Eval("StartDate"))) %></span>
+                                                        - To <span><%# String.Format("{0:dd MMMM yyyy}" , Convert.ToDateTime(Eval("EndDate"))) %></span>
+                                                    </div>
+                                                </div>
+
+                                            </ItemTemplate>
+                                        </asp:DataList>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div id="pollHistoryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="pollHistoryModalLabel" data-backdrop="static"
+                        data-keyboard="false" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Poll History</h4>
+
+                                </div>
+                                <div class="modal-body">
+                                    <div class="errorMsg" id="errorMsgPollHis" visible="false" runat="server">
+
+                                        <asp:Label ID="lblErrorPollHis" runat="server" Text=""></asp:Label>
+
+                                    </div>
+                                    <div style="overflow-y: scroll">
+                                        <asp:GridView ID="gvPollHistory" CssClass="table table-responsive" runat="server" AutoGenerateColumns="false">
+                                            <Columns>
+                                                <asp:BoundField DataField="PollQuestion" HeaderText="Poll" />
+                                                <asp:BoundField DataField="PollOption" HeaderText="Choice" />
+                                                <asp:BoundField DataField="PollAttendedOn" HeaderText="Poll Atteneded On" DataFormatString="{0:dd MMMM yyyy - h:mm tt}" />
+                                            </Columns>
+                                        </asp:GridView>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div id="editModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" data-backdrop="static"
+                        data-keyboard="false" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <%--<asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
+                                <ContentTemplate>--%>
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h3 id="editModalLabel">Edit Details</h3>
+                                </div>
+
+                                <div class="modal-body">
+                                    <div class="successMsg" id="successMsg" visible="false" runat="server">
+
+
+                                        <asp:Label ID="lblSucess" runat="server" Text=""></asp:Label>
+
+                                    </div>
+                                    <div class="errorMsg" id="errorMsg" visible="false" runat="server">
+
+
+                                        <asp:Label ID="lblError" runat="server" Text=""></asp:Label>
+
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table style="align-self: center; width: 100%" class="table">
+
+                                            <thead>
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <div class="avatar">
+                                                            <asp:Image runat="server" ID="imgProfilepic" ImageAlign="Top" Width="110px" Height="110px" />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Frist Name
+                                                    </th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox runat="server" ID="txtFirstName"> </asp:TextBox>
+                                                    </td>
+                                                    <%--<td rowspan="3" style="">
+                                                       
+                                                    </td>--%>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr>
+                                                    <th>Last Name
+                                                    </th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <p>
+                                                            <asp:TextBox runat="server" ID="txtLastName"></asp:TextBox>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Date of Birth
+                                                    </th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <p>
+                                                            <asp:TextBox runat="server" ID="txtAge" ClientIDMode="Static" CssClass="m-wrap span12 date form_date"></asp:TextBox>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Gender
+                                                    </th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <asp:RadioButtonList ID="rblgender" runat="server" RepeatDirection="Horizontal">
+                                                            <asp:ListItem Selected="True">Male</asp:ListItem>
+                                                            <asp:ListItem>Female</asp:ListItem>
+                                                        </asp:RadioButtonList>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Photo</th>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <%-- <input type="file" name="ImageUpload" id="ImageUpload" onchange="ShowPreview(this)" />  --%>
+                                                        <asp:FileUpload ID="fuldphoto" onChange="ShowPreview(this)" runat="server" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Addressline1</th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtaddressline1" runat="server"></asp:TextBox></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>AddressLine2</th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtaddressline2" runat="server"></asp:TextBox></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>City</th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtcity" runat="server"></asp:TextBox></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>State</th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtstate" runat="server"></asp:TextBox></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Country</th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtcountry" runat="server"></asp:TextBox></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                                <div class="modal-footer">
+
+                                    <asp:Button ID="btnSave" runat="server" Text="Update" data-backdrop="static" data-target="#editModal" OnClick="btnSave_Click" CssClass="btn btn-info" />
+
+                                    <button class="btn btn-info" data-dismiss="modal" aria-hidden="true">Close</button>
+
+                                </div>
+
+                            </div>
+                            <%--</ContentTemplate>
+                                <Triggers>
+                                    <asp:AsyncPostBackTrigger ControlID="btnSave" />
+
+                                </Triggers>
+                            </asp:UpdatePanel>--%>
+                        </div>
+                    </div>
+
+
+                    <div class="avatar">
+
+                        <asp:Image ID="imgProfileImage" runat="server" Width="105" Height="105" />
+                        <div>
+                            <asp:LinkButton ID="lnkDownload" runat="server" Text="Edit Details" data-backdrop="static" data-toggle="modal" data-target="#editModal"></asp:LinkButton>
+                        </div>
+                    </div>
+                    <div class="details">
+                        <div class="table-responsive">
+                            <table class="table">
+
+                                <tr>
+                                    <th>Name
+                                    </th>
+                                    <td>:
+                                    </td>
+                                    <td>
+                                        <asp:Label runat="server" ID="lblUsername"></asp:Label>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Age
+                                    </th>
+                                    <td>:
+                                    </td>
+                                    <td>
+                                        <asp:Label runat="server" ID="lblAge"></asp:Label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Gender
+                                    </th>
+                                    <td>:
+                                    </td>
+                                    <td>
+                                        <asp:Label runat="server" ID="lblGender"></asp:Label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Height
+                                    </th>
+                                    <td>:
+                                    </td>
+                                    <td>
+                                        <asp:Label runat="server" ID="lblheight"> CM</asp:Label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Weight
+                                    </th>
+                                    <td>:
+                                    </td>
+                                    <td>
+                                        <asp:Label runat="server" ID="lblweight"> KG</asp:Label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h2>Status of the Memeber</h2>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Status
+                                    </th>
+                                    <td>:
+                                    </td>
+                                    <td>
+                                        <asp:Label ID="lblStatus" runat="server"></asp:Label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Last Date
+                                    </th>
+                                    <td>:
+                                    </td>
+                                    <td>
+                                        <asp:Label ID="lblLastDate" runat="server"></asp:Label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Trainer
+                                    </th>
+                                    <td>:
+                                    </td>
+                                    <td>
+                                        <asp:Label ID="lbltrainer" runat="server"></asp:Label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <%--                   
+                    <div class="table-responsive">
+                        <table class="table">
+                        
+                        </table>
+                    </div>--%>
+                </section>
+
+                <section class="box widget locations">
+
+                    <div class="details">
+                        <h2>Goals</h2>
+                        <p>
+                            <q>
+                                <asp:Label ID="lblgoals" runat="server" Text="No Goals set yet"></asp:Label></q>
+                        </p>
+                    </div>
+                    <div class="details">
+                        <h2>Problems</h2>
+                        <p>
+                            <q>
+                                <asp:Label ID="lblProblems" runat="server" Text="No Problems set yet"></asp:Label></q>
+                        </p>
+                    </div>
+
+
+                </section>
+
+                <section class="box widget locations">
+
+                    <div class="details">
+                        <h2>Evaluation Result</h2>
+                        <div class="table-responsive">
+                            <p>
+                                <asp:Label ID="lblEvaluationResult" runat="server" Visible="false" Text="Evaluation Not done yet."></asp:Label></p>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <a data-toggle="modal" data-target="#ERModel1" data-local="#ERCarousel1">
+                                                View the Evalation Results
+                                                <%--<asp:Image runat="server" ClientIDMode="static" ID="imgResult" CssClass="img-thumbnail" Width="100" Height="100" />--%>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+                            <!-- /.modal -->
+                            <div id='ERModel1' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" style="width: 90%;height:100%;">
+                                    <!-- /.modal-dialog -->
+                                    <div class="modal-content" style='height:91%;'>
+                                        <!-- /.modal-content -->
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        </div>
+                                        <div class="modal-body" style='height:90%;'>
+                                            <!-- /.Carousel -->
+                                            <div id='ERCarousel1' class="carousel slide carousel-fit" data-ride="carousel" data-interval="60000" style="display: none;height:90%">
+
+                                                <!-- Wrapper for slides -->
+                                                <div class="carousel-inner" clientidmode="static" id="divslider" runat="server" style="height:100%">
+                                                </div>
+                                                <!-- Controls -->
+                                                <%--<a class="left carousel-control" href='#ERCarousel1' data-slide="prev">
+                                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                                </a>
+                                                <a class="right carousel-control" href='#ERCarousel1' data-slide="next">
+                                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                                </a>--%>
+
+                                            </div>
+                                            <!-- /.Carousel -->
+
+                                        </div>
+
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+
+                        </div>
+
+
+
+
+
+                    </div>
+
+                </section>
+                <section class="box widget">
+                    <article class="box">
+                        <iframe height="400" style="width: 100%;" scrolling="no" frameborder="0" src="../FullCalendar.aspx"></iframe>
+                    </article>
+                </section>
+            </div>
+            <div class="col-lg-6">
+                <article class="contentbox">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </article>
+            </div>
+            <div class="col-lg-3">
+                <section class="box widget locations">
+                    <div class="details">
+                        <h2>Achiever of the Month</h2>
+                        <div class="errorMsg" id="errorMsgAchiever" visible="false" runat="server">
+                            <asp:Label ID="lblerrorAchiever" runat="server" Text=""></asp:Label>
+                        </div>
+                        <asp:UpdatePanel ID="UpdatePanel1" UpdateMode="Conditional" ChildrenAsTriggers="true" runat="server">
+                            <ContentTemplate>
+                                <asp:Repeater ID="repTopAchiever" runat="server">
+                                    <ItemTemplate>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <td colspan="3" style="text-align: center">
+                                                            <div class="avatar">
+                                                                <asp:Image ID="imgUser" runat="server" EnableViewState="False" Width="105" Height="105" ImageUrl='<%# "../Admin/ProfileImage.ashx?id="+ Eval("AchieverUserId") %>' />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </thead>
+                                                <tr>
+
+                                                    <th>Achiver 
+                                                    </th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <p>
+                                                            <asp:Label ID="lblTopAchiever" runat="server" Text='<%# Eval("FullName") %>'></asp:Label>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Category</th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <p>
+                                                            <asp:Label ID="Label1" runat="server" Text='<%# Eval("AchieverMasterDetails") %>'></asp:Label>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Month</th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <p>
+                                                            <asp:Label ID="Label4" runat="server" Text='<%# String.Format("{0:MMMM/yyyy}" , Convert.ToDateTime(Eval("AchievedMonthFor"))) %>'></asp:Label>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Record</th>
+                                                    <td>:
+                                                    </td>
+                                                    <td>
+                                                        <p>
+                                                            <asp:Label ID="Label2" runat="server" Text='<%# Eval("AchievedNumber") %>'></asp:Label>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </ItemTemplate>
+                                    <SeparatorTemplate>
+                                    </SeparatorTemplate>
+                                </asp:Repeater>
+
+                                <asp:HiddenField ID="CurrentPage" Value="1" runat="server" />
+                                <asp:HiddenField ID="PageSize" Value="1" runat="server" />
+                                <asp:HiddenField ID="TotalSize" runat="server" />
+                                <asp:LinkButton ID="Prev" Text="<< Previous" CssClass="btn btn-info btn-xs active" OnClick="Page_Repeater" runat="server" />
+                                &nbsp;
+                        <asp:LinkButton ID="Next" Text="Next >>" CssClass="btn btn-info btn-xs active" OnClick="Page_Repeater" runat="server" />
+                            </ContentTemplate>
+                            <Triggers>
+                                <asp:AsyncPostBackTrigger ControlID="Prev" />
+                                <asp:AsyncPostBackTrigger ControlID="Next" />
+                            </Triggers>
+
+                        </asp:UpdatePanel>
+                    </div>
+                </section>
+                <section class="box widget locations">
+                    <div class="details">
+                        <h2>Voting</h2>
+                        <div class="errorMsg" id="errorMsgPoll" visible="false" runat="server">
+                            <asp:Label ID="lblerrorPoll" runat="server" Text=""></asp:Label>
+                        </div>
+                        <asp:UpdatePanel ID="UpdatePanel2" UpdateMode="Conditional" ChildrenAsTriggers="true" runat="server">
+                            <ContentTemplate>
+                                <asp:DataList ID="dlstPoll" runat="server" DataKeyField="PollId" CssClass="table table-condensed" OnItemCommand="dlstPoll_ItemCommand" OnItemDataBound="dlstPoll_ItemDataBound">
+                                    <ItemTemplate>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <asp:HiddenField ID="hddAttended" Value='<%# Eval("IsAttended") %>' runat="server" />
+                                                    <asp:Image runat="server" class="form-control" ImageUrl='<%# Eval("PollImage") %>' Visible="false" ID="imgPollpic" Width="260" Height="236" ImageAlign="Top" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <asp:Label ID="Label3" runat="server" Text='<%# Eval("PollQuestion") %>'></asp:Label>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="radio">
+                                                        <asp:RadioButtonList ID="rblPollOptions" runat="server" CssClass="radio"></asp:RadioButtonList>
+                                                    </div>
+                                                    <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary" CommandArgument='<%# Eval("PollId") %>' CommandName="SubmitPoll" OnClick="btnSubmit_Click" Text="submit" />
+
+                                                    <asp:LinkButton ID="lnkPollChart" runat="server" ClientIDMode="static" Text="View Result" data-toggle="modal" CommandArgument='<%# Eval("PollId") %>' data-target='<%# Eval("PollId","#Model{0}") %>'></asp:LinkButton>
+
+                                                    <div id='Model<%# Eval("PollId") %>' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <!-- /.modal-dialog -->
+                                                            <div class="modal-content">
+                                                                <!-- /.modal-content -->
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                    <h2 id="myModalLabel">Poll Results (%)</h2>
+
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <asp:Chart ID="crtPollUsers" runat="server" Style="height: 250px; width: 500px;">
+                                                                        <Titles>
+                                                                            <asp:Title ShadowOffset="3" Name="Items" />
+                                                                        </Titles>
+                                                                        <Series>
+                                                                            <asp:Series>
+                                                                            </asp:Series>
+                                                                        </Series>
+                                                                        <Legends>
+                                                                            <asp:Legend Alignment="Center" Docking="Bottom" IsTextAutoFit="False" Name="Default" LegendStyle="Row" />
+                                                                        </Legends>
+                                                                        <ChartAreas>
+                                                                            <asp:ChartArea Name="ChartArea1">
+                                                                                <%-- <AxisY Title="Poll Users" IntervalType="Number" />--%>
+                                                                            </asp:ChartArea>
+
+                                                                        </ChartAreas>
+
+                                                                    </asp:Chart>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                </div>
+
+                                                            </div>
+                                                            <!-- /.modal-content -->
+                                                        </div>
+                                                        <!-- /.modal-dialog -->
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </table>
+                                    </ItemTemplate>
+                                </asp:DataList>
+                                <asp:HiddenField ID="CurrentPagePoll" Value="1" runat="server" />
+                                <asp:HiddenField ID="PageSizePoll" Value="1" runat="server" />
+                                <asp:HiddenField ID="TotalSizePoll" runat="server" />
+                                <asp:LinkButton ID="PrevPoll" Text="<< Previous" CssClass="btn btn-info btn-xs active" OnClick="PagePoll_Repeater" runat="server" />
+                                &nbsp;
+                        <asp:LinkButton ID="NextPoll" Text="Next >>" CssClass="btn btn-info btn-xs active" OnClick="PagePoll_Repeater" runat="server" />
+                            </ContentTemplate>
+                            <Triggers>
+                                <asp:AsyncPostBackTrigger ControlID="PrevPoll" />
+                                <asp:AsyncPostBackTrigger ControlID="NextPoll" />
+                            </Triggers>
+
+                        </asp:UpdatePanel>
+                    </div>
+                </section>
+
+                <section class="box widget locations">
+                    <div class="details">
+                        <div class="sec-title">
+                            
+                            <h2>COURSES &amp; TRAININGS</h2>
+                        </div>
+                    
+                        <div class="post wow fadeInUp" data-wow-delay="0.5s" data-wow-duration="1.5s" data-wow-offset="0">
+                            <h3>Cardio &amp; agility training</h3>
+                            <div class="desc">2 hours /  6 am / gross field </div>
+                            <div class="info">
+                                Johnson - Coach <span class="icon flaticon-cycling"></span>
+                                <asp:Button ID="btnAgility" style="margin-top:0px;" runat="server" CssClass="btn btn-primary btn-sm" Text="Join" OnClick="btnAgility_Click"/>
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="post wow fadeInUp" data-wow-delay="0.5s" data-wow-duration="1.5s" data-wow-offset="0">
+                            <h3>Cardio & core training</h3>
+                            <div class="desc">2 hours/ 6am/  gross field</div>
+                            <div class="info">
+                                Sathish - Coach <span class="icon flaticon-sprint"></span>
+                                <asp:Button ID="btnCore" style="margin-top:0px;" runat="server" CssClass="btn btn-primary btn-sm" Text="Join" OnClick="btnAgility_Click"/>
+                            </div>
+                        </div>
+                        
+                        <div class="post wow fadeInUp" data-wow-delay="0.5s" data-wow-duration="1.5s" data-wow-offset="0">
+                            <h3>Circuit training </h3>
+                            <div class="desc">2 hours/  6am / gym</div>
+                            <div class="info">
+                                K Vel  - Coach<span class="icon flaticon-sprint"></span>
+                                <asp:Button ID="btnCircuit" style="margin-top:0px;" runat="server" CssClass="btn btn-primary btn-sm" Text="Join" OnClick="btnAgility_Click"/>
+                            </div>
+                        </div>
+						
+						<div class="post wow fadeInUp" data-wow-delay="0.5s" data-wow-duration="1.5s" data-wow-offset="0">
+                            <h3>Cycling</h3>
+                            <div class="desc">4 hours / 5.30am / on road site</div>
+                            <div class="info">
+                                Navaneeth  - Coach<span class="icon flaticon-sprint"></span>
+                                <asp:Button ID="btnCycling" style="margin-top:0px;" runat="server" CssClass="btn btn-primary btn-sm" Text="Join" OnClick="btnAgility_Click"/>
+                            </div>
+                        </div>
+						
+						<div class="post wow fadeInUp" data-wow-delay="0.5s" data-wow-duration="1.5s" data-wow-offset="0">
+                            <h3>Trekking</h3>
+                            <div class="desc">4 hours/ 5.30am  on mount or forest area</div>
+                            <div class="info">
+                                Bala  - Coach<span class="icon flaticon-sprint"></span>
+                                <asp:Button ID="btnTrucking" style="margin-top:0px;" runat="server" CssClass="btn btn-primary btn-sm" Text="Join" OnClick="btnAgility_Click"/>
+                            </div>
+                        </div
+                    </div>
+                </section>
+            </div>
+        </div>
+        <script src="../js/bootswatch.js"></script>
+        <link href="../css/bootstrap-modal-carousel.min.css" rel="stylesheet" />
+        <script src="../js/bootstrap-datetimepicker.min.js"></script>
+        <script type="text/javascript">
+
+            function openModal() {
+                $('#editModal').modal({ show: true });
+            }
+            $('.form_date').datetimepicker({
+                //language:  'fr',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                format: "dd MM yyyy"
+            });
+
+            //$('#editModal').on('hidden.bs.modal', function () {
+            //   location.reload();
+            //});
+
+            $(document).bind('contextmenu', function (e) {
+                e.preventDefault();
+            });
+
+
+            $(document).ready(function () {
+
+                //$('[data-toggle="tooltip"]').tooltip();
+
+                $('#ERModel1').on('show.bs.modal', function (e) {
+                    $('#ERCarousel1').css('display', 'block');
+                });
+
+                $('#ERModel1').on('hidden.bs.modal', function (e) {
+                    $('#ERCarousel1').css('display', 'none');
+
+                });
+                $('#NotificationModal').on('show.bs.modal', function () {
+                    $("input[id=hddIsViewNotify]").val("1");
+
+                });
+                $('#NotificationModal').on('hidden.bs.modal', function () {
+                    $("input[id=hddIsViewNotify]").val("1");
+                    var userid = $("input[id=hddId]").val();
+                    $.ajax({
+                        type: "POST",
+                        url: "NotificationEvent.asmx/InsertNotificationView",
+                        data: "{'userID':'" + userid + "'}",
+                        contentType: "application/json; charset=utf-8",
+                        datatype: "json",
+
+                        success: function (response) {
+                            $('#spnNotificationCount').text('');
+                            $('#spnNotificationCount').removeClass("badge");
+                            $('#liNotificationCount').removeClass("active");
+                            $('#divModalBody').empty();
+                            $('#divModalBody').removeAttr("style");
+                            $('#divModalBody').text('No New Event Notification.Please check your Calender.');
+                            //alert("Saved");
+                        },
+                        error: function (response) {
+                            var readyState = {
+                                1: "Loading",
+                                2: "Loaded",
+                                3: "Interactive",
+                                4: "Complete"
+                            };
+                            if (response.readyState !== 0 && response.status !== 0 && response.responseText !== undefined) {
+                                alert("readyState: " + readyState[response.readyState] + "\n status: " + response.status + "\n\n responseText: " + response.responseText);
+                            }
+                        }
+                    })
+
+                });
+
+
+            });
+
+
+        </script>
+        <asp:HiddenField ID="hddId" runat="server" />
+        <asp:HiddenField ID="hddIsViewNotify" ClientIDMode="Static" runat="server" Value="0" />
+        <asp:HiddenField ID="hddEmptNotifyMsg" runat="server" Value="No New Event Notification.Please check your Calender." />
+
+        <div id="fullCalModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                <h4 id="modalTitle" class="modal-title"></h4>
+            </div>
+            <div id="modalBody" class="modal-body"></div>
+            
+        </div>
+    </div>
+</div>
+    </form>
+
+</body>
+</html>
