@@ -15,8 +15,10 @@ namespace AntiClockFitnessCentre
             //{
             //    Response.Redirect("~/Login.aspx");
             //}
-
-            AntiClockFitnessCenter.SendEmail("navanneethan@gmail.com", "Tst", "asdasdsad");
+            string subject = AntiClockFitnessCenter.ReadXML(@"ACHF/NewUser/Subject");
+            string body = AntiClockFitnessCenter.ReadXML(@"ACHF/NewUser/Body");
+            body = string.Format(body, "Test "+DateTime.Now.ToString(), "password123");
+            AntiClockFitnessCenter.SendEmail("navanneethan@gmail.com", subject, body);
         }
     }
 }

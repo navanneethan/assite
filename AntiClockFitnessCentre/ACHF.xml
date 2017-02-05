@@ -1,10 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ACHF>
 	<NewUser>
-		<Subject>Account created</Subject>
+		<Subject>Welcome to AtSaiPavi - Account created</Subject>
 		<Body>
-			<p>Your account is successfully created. Your password is <b>{0}</b>
+			<p>
+				<h1>Welcome to AtSaiPavi {0}</h1>
+			</p>
+			<p>A very special welcome to you {0}, thank you for joining <a href="http://www.atsaipavi.com/" target="_blank">AtSaiPavi.com</a>
 		</p>
+			<p>Your password is <b>{1}</b><br/>
+			Please keep it secret, keep it safe! 
+		</p>
+			<p>
+				We hope you enjoy your stay at <a href="http://www.atsaipavi.com/" target="_blank">AtSaiPavi.com</a>, if you have amy problems, questions, opinions, comments, suggestions, please feel free to contact us at any time.  
+			</p>
 		</Body>
 	</NewUser>
 	<Course>

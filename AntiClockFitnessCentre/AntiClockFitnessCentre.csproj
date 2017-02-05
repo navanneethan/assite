@@ -90,7 +90,6 @@
     <Content Include="bin\AntiClockFitnessCentreDAL.pdb" />
     <Content Include="bin\AntiClockFitnessCentreModal.dll" />
     <Content Include="bin\AntiClockFitnessCentreModal.pdb" />
-    <Content Include="bin\gsdll32.dll" />
     <Content Include="CalTest.htm" />
     <Content Include="CopDefault.aspx" />
     <Content Include="css\alert.css" />

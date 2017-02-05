@@ -101,7 +101,7 @@ namespace AntiClockFitnessCentre
                         {
                             string subject = AntiClockFitnessCenter.ReadXML(@"ACHF/NewUser/Subject");
                             string body = AntiClockFitnessCenter.ReadXML(@"ACHF/NewUser/Body");
-                            body = string.Format(body, "password123");
+                            body = string.Format(body, txtfirstname.Text,"password123");
                             AntiClockFitnessCenter.SendEmail(txtemailid.Text, subject, body);
                         }
                     }

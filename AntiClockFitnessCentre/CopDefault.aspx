@@ -26,7 +26,7 @@
     <section class="box widget locations">
       <div class="avatar">
         <%--<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/6035/scrtpxls_location.png"  />--%>
-          <img src="ProfileImage/9940497432.jpg" height="175" width="175" />
+          <img src="ProfileImage/nomale.png" height="175" width="175" />
       </div>
       <div class="details">        
              <ul>

@@ -118,7 +118,8 @@ namespace AntiClockFitnessCentre
                 }
                 string server = ConfigurationManager.AppSettings["SMPTServer"].ToString(),
                    username = ConfigurationManager.AppSettings["SMPTUser"].ToString(),
-                   pwd = ConfigurationManager.AppSettings["SMPTPwd"].ToString();
+                   pwd = ConfigurationManager.AppSettings["SMPTPwd"].ToString(),
+                port = ConfigurationManager.AppSettings["SMPTPort"].ToString();
                 MailMessage msg = new MailMessage();
                 msg.From = new MailAddress(username);
                 msg.To.Add(strTo); //from argument
@@ -130,8 +131,8 @@ namespace AntiClockFitnessCentre
                 msg.Body = strMessage; //from argument
 
                 SmtpClient client = new SmtpClient(server);
-                client.Port = 587;
-                client.EnableSsl = true;
+                client.Port = Convert.ToInt16(port);
+                //client.EnableSsl = true;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.Credentials = new System.Net.NetworkCredential(username, pwd);
                 client.Timeout = 20000;
