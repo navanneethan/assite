@@ -20,3 +20,6 @@ Version.cpp
 /AntiClockFitnessCentreModal/Debug/
 /AntiClockFitnessCentreModal/Release/
 /AntiClockFitnessCentreModal/bin/Release
+/AntiClockFitnessCentreBL/bin
+obj
+bin
