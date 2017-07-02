@@ -9,7 +9,9 @@
 <head runat="server">
     <meta charset="utf-8" />
     <title>AtSaiPavi</title>
-    <meta name="description" content="" />
+     <meta name="author" content="http://www.atsaipavi.com/">
+		<meta name="keywords" content="Chennai,Doctors,Appointment,Fitness,Health,Atsaipavi,Online fitness,Online gym,Gym,Gym managment,physiotherapist,online physiotherapist">
+		<meta name="description" content="AtSaiPavi provide world class health and fitness services at your working area, living apartments and gym premises. Our motto is to rejuvenate without growing old and fat to giving you the best fitness advice and training without making you feel board seeking for fitness professionals">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <!--Favicon -->
 	<link rel="icon" type="image/png" href="images/favicon.ico" />
@@ -37,7 +39,9 @@
 		<div class="nav-inner">
 			<!-- Site Logo -->
 			<div class="site-logo">
-				<a href="#" id="logo-text" class="scroll logo">AtSaiPavi Physio & Fitness
+				<a href="#" id="logo-text" class="scroll logo">
+                    <img src="images/asphealth.png" alt="AtSaiPavi Health" height="72px" />
+                   <%-- AtSaiPavi Physio & Fitness--%>
 				</a>
 			</div><!-- End Site Logo -->
 			<a class="mini-nav-button gray2"><i class="fa fa-bars"></i></a>
@@ -129,7 +133,9 @@
 							Our motto is to rejuvenate without growing old and fat to giving you the best fitness advice and training  without making you feel board seeking for fitness professionals.
 							<span class="colored bold">AtSaiPavi </span> helps you to connect with well experienced fitness professionals and to keep your body fit and healthy without stepping in to fitness studios.
 							we play core role in your daily activities to break down your calories and build up the wealthy health.
-							<span class="colored bold">AtSaiPavi </span> a clock that takes you younger sec by sec care you minute by minutes protects you hour by hour feel fresh to receive our service at an earlier stage to run your body clock extend our service.</p>
+							<span class="colored bold">AtSaiPavi </span> a clock that takes you younger sec by sec care you minute by minutes protects you hour by hour feel fresh to receive our service at an earlier stage to run your body clock extend our service.
+                     To consult an personal trainer,dietician and physiotherapy once a month and to handle the health and fitness program <span class="colored bold">&#8377;Rs499</span> Only per month.
+				 </p>
 					
 				</div>
 				
@@ -563,21 +569,26 @@
 					<!-- Left Inputs -->
 					<div class="col-xs-6 animated" data-animation="fadeInLeft" data-animation-delay="300">
 						<!-- Name -->
-						<input type="text" name="name" id="name" required="required" class="form" placeholder="Name" />
+                        <asp:TextBox ID="txtName" runat="server" required="required" class="form" placeholder="Name" />
+						<%--<input type="text" name="name" id="name" required="required" class="form" placeholder="Name" />--%>
 						<!-- Email -->
-						<input type="email" name="mail" id="mail" required="required" class="form" placeholder="Email" />
+                        <asp:TextBox ID="txtEmail" runat="server" required="required" class="form" placeholder="Email" TextMode="Email" />
+						<%--<input type="email" name="mail" id="mail" required="required" class="form" placeholder="Email" />--%>
 						<!-- Subject -->
-						<input type="text" name="subject" id="subject" required="required" class="form" placeholder="Subject" />
+                        <asp:TextBox ID="txtSubject" runat="server" required="required" class="form" placeholder="Subject" />
+						<%--<input type="text" name="subject" id="subject" required="required" class="form" placeholder="Subject" />--%>
 					</div><!-- End Left Inputs -->
 					<!-- Right Inputs -->
 					<div class="col-xs-6 animated" data-animation="fadeInRight" data-animation-delay="400">
 						<!-- Message -->
-						<textarea name="message" id="message" class="form textarea"  placeholder="Message"></textarea>
+                         <asp:TextBox ID="txtMessage" runat="server" required="required" class="form" placeholder="Message" Height="160px" TextMode="MultiLine" />
+						<%--<textarea name="message" id="message" class="form textarea"  placeholder="Message"></textarea>--%>
 					</div><!-- End Right Inputs -->
 					<!-- Bottom Submit -->
 					<div class="relative fullwidth col-xs-12">
 						<!-- Send Button -->
-						<button type="submit" id="submit" name="submit" class="form-btn semibold">Send Message</button> 
+                        <asp:Button ID="btnSubmit" runat="server" Text="Send Message" CssClass="form-btn semibold" OnClick="btnSubmit_Click" />
+						<%--<button type="submit" id="submit" name="submit" class="form-btn semibold">Send Message</button>--%> 
 					</div><!-- End Bottom Submit -->
 					<!-- Clear -->
 					<div class="clear"></div>

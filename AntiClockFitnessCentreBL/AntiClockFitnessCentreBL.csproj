@@ -42,6 +42,7 @@
     <Compile Include="AchievementBL.cs" />
     <Compile Include="CommonBL.cs" />
     <Compile Include="CompanyBL.cs" />
+    <Compile Include="TrainingVideoBL.cs" />
     <Compile Include="EvaluationBL.cs" />
     <Compile Include="EventsBL.cs" />
     <Compile Include="FileUploadsBL.cs" />

@@ -90,7 +90,7 @@ namespace AntiClockFitnessCentre.SuperAdmin
                     mobilenum = _Result.Rows[0][1].ToString();
                     emailid = _Result.Rows[0][2].ToString();
                     int _Results = _PaymentBL.UpdatePaymentDetails(orderid, "Cash", "Cash",
-                    "INR", "", "Cash", "Cash", "Cash", "Cash", "Cash", ddlMonths.SelectedItem.Value);
+                    "INR",  "Cash", "Cash", "Cash",  ddlMonths.SelectedItem.Value,"1");
                     successMsg.Visible = true;
                     lblSucess.Text = "For "+ddlUser.SelectedItem.Text+ " activated for "+ddlMonths.SelectedItem.Value+" month(s)";
                 }

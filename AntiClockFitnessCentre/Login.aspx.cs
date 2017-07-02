@@ -74,19 +74,19 @@ namespace AntiClockFitnessCentre
                 {
                     Response.Redirect("~/Trainer/HomePage.aspx", false);
                 }
-                else if (_UserDetails.Rows[0]["RoleID"].ToString() == "3")
+                //else if (_UserDetails.Rows[0]["RoleID"].ToString() == "3")
+                //{
+                //    Response.Redirect("~/Trainee/HomePage.aspx", false);
+                //}
+                else if (_UserDetails.Rows[0]["RoleID"].ToString() == "3" && _UserDetails.Rows[0]["PayStatus"].ToString() == "1")
                 {
                     Response.Redirect("~/Trainee/HomePage.aspx", false);
                 }
-                //else if (_UserDetails.Rows[0]["RoleID"].ToString() == "3" && _UserDetails.Rows[0]["PayStatus"].ToString() == "1")
-                //{
-                  //  Response.Redirect("~/Trainee/HomePage.aspx", false);
-                //}
-                //else if (_UserDetails.Rows[0]["RoleID"].ToString() == "3" && (_UserDetails.Rows[0]["PayStatus"].ToString() == "0" || _UserDetails.Rows[0]["PayStatus"].ToString() == "2"))
-                //{
-                  //  Session["PaymentUserID"] = _UserDetails.Rows[0]["UserID"].ToString();
-                    //Response.Redirect("~/Payment/PayDetails.aspx", false);
-                //}
+                else if (_UserDetails.Rows[0]["RoleID"].ToString() == "3" && (_UserDetails.Rows[0]["PayStatus"].ToString() == "0" || _UserDetails.Rows[0]["PayStatus"].ToString() == "2"))
+                {
+                    Session["PaymentUserID"] = _UserDetails.Rows[0]["UserID"].ToString();
+                    Response.Redirect("~/Payment/PayDetails.aspx", false);
+                }
                 else if (_UserDetails.Rows[0]["RoleID"].ToString() == "4")
                 {
                     Response.Redirect("~/SuperAdmin/Homepage.aspx", false);

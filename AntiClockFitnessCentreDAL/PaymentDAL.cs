@@ -21,22 +21,20 @@ namespace AntiClockFitnessCentreDAL
         }
 
         public int UpdatePaymentDetails(string orderID,string transID,string bankTransID,
-            string currency,string resCode,string resMessage,string gateway,string bankName,string paymentMode,
-            string checkSum,string months)
+            string resMessage,string bankName,string paymentMode,
+            string checkSum,string months,string status)
         {
             _DBManager.CommandText = StoredProcedure.UPDATE_PAYMENT_DETAILS;
             Hashtable _Paramaters = new Hashtable();
             _Paramaters.Add("ORDERID", orderID);
             _Paramaters.Add("TransID", transID);
             _Paramaters.Add("BankTransID", bankTransID);
-            _Paramaters.Add("Currency", currency);
-            _Paramaters.Add("ResCode", resCode);
             _Paramaters.Add("ResMessage", resMessage);
-            _Paramaters.Add("GatewayName", gateway);
             _Paramaters.Add("BankName", bankName);
             _Paramaters.Add("PaymentMode", paymentMode);
             _Paramaters.Add("CheckSum", checkSum);
             _Paramaters.Add("Months", months);
+            _Paramaters.Add("Status", status);
             _DBManager.Parameters = _Paramaters;
             int _Result = _DBManager.ExecuteUpdateCommand();
 

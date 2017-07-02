@@ -28,6 +28,10 @@ namespace AntiClockFitnessCentreDAL
         public const string SELECT_TRANSACTIONS = "USP_SELECT_TRANSACTION";
         public const string DELETE_TRANSACTIONS = "USP_DELETE_TRANSACTION";
 
+        public const string INSERT_TRAINING_VIDEO = "USP_INSERT_TRAINING_VIDEO";
+        public const string SELECT_TRAINING_VIDEO = "USP_SELECT_TRAINING_VIDEO";
+        public const string DELETE_TRAINING_VIDEO = "USP_DELETE_TRAINING_VIDEO";
+
         public const string INSERT_SCHEDULE = "USP_INSERT_SCHEDULE";
         public const string SELECT_EXERCISE = "USP_SELECT_EXERCISE";
         public const string SELECT_SCHEDULE = "USP_SELECT_SCHEDULE";

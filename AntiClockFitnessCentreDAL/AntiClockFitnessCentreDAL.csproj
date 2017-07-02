@@ -43,6 +43,7 @@
     <Compile Include="AchievementDAL.cs" />
     <Compile Include="CommonDAL.cs" />
     <Compile Include="CompanyDAL.cs" />
+    <Compile Include="TrainingVideoDAL.cs" />
     <Compile Include="DBManager.cs" />
     <Compile Include="EvaluationDAL.cs" />
     <Compile Include="EventsDAL.cs" />

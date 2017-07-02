@@ -7,6 +7,21 @@
     margin-top: 5px;
 }
 
+
+
+
+.payment{width:50%;margin: 0 auto;border:solid 1px #0E5396;}
+.payment .head{background-color:#0c3170;padding:5px;color:#fff;}
+.paymentrow{
+    height: 100%;
+    display: table-row;}
+.paymentleft{width:40%;border-right:solid 1px #0c3170;height: 100%;padding: 5px;
+    display: table-cell;font-weight:bold;}
+.paymentright{width:60%;height: 100%;padding :5px;
+    display: table-cell;word-break: BREAK-ALL;}
+.paymentbottom{border-bottom:solid 1px #0c3170;}
+
+
 .details {
     padding-left: 0px;
     padding-top: 0px;

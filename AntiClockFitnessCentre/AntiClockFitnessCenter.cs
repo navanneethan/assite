@@ -16,6 +16,7 @@ namespace AntiClockFitnessCentre
     public static class AntiClockFitnessCenter
     {
         public const string TRANSACTION_DETAILS = "TransactionDetailS";
+        public const string TRAINING_DETAILS = "TrainingVideoDetailS";
         public const string SCHEDULE_DETAILS = "ScheduleDetailS";
         public const string POLL_MASTER_DETAILS = "PollMasterDetails";
         public const string ACHIEVER_DETAILS = "AchieverDetailS";

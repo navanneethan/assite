@@ -17,11 +17,11 @@ namespace AntiClockFitnessCentreBAL
         }
 
         public int UpdatePaymentDetails(string orderID, string transID, string bankTransID,
-            string currency, string resCode, string resMessage, string gateway, string bankName, string paymentMode,
-            string checkSum, string months)
+            string resMessage, string bankName, string paymentMode,
+            string checkSum, string months, string status)
         {
             return _PaymentDAL.UpdatePaymentDetails(orderID, transID, bankTransID,
-             currency, resCode, resMessage, gateway, bankName, paymentMode, checkSum, months);
+             resMessage, bankName, paymentMode, checkSum, months, status);
         }
     }
 }

@@ -677,7 +677,7 @@ namespace AntiClockFitnessCentre.Trainee
             string body = AntiClockFitnessCenter.ReadXML(@"ACHF/Course/Body");
             subject = string.Format(subject, txtFirstName.Text + " " + txtLastName.Text + "(" + hddId.Value + ")");
             body = string.Format(body, txtFirstName.Text + " " + txtLastName.Text + "(" + hddId.Value+")", trainingprogram);
-            AntiClockFitnessCenter.SendEmail("achf.ind@gmail.com", subject, body);
+            AntiClockFitnessCenter.SendEmail("atsaipavipvtltd@gmail.com", subject, body);
         }
 
         //[WebMethod(EnableSession = true)]

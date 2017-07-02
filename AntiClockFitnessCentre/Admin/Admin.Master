@@ -8,40 +8,40 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<%--    Validation Tools--%>
+    <%--    Validation Tools--%>
 
-      <link href="../css/Validation/customMessages.css" rel="stylesheet" />
-    <link href="../css/Validation/template.css" rel="stylesheet" />   
+    <link href="../css/Validation/customMessages.css" rel="stylesheet" />
+    <link href="../css/Validation/template.css" rel="stylesheet" />
     <script src="../js/Validations/jquery-1.8.2.min.js"></script>
-     <link href="../css/Validation/validationEngine.jquery.css" rel="stylesheet" />
-     
+    <link href="../css/Validation/validationEngine.jquery.css" rel="stylesheet" />
+
     <script src="../js/Validations/jquery.validationEngine.js"></script>
     <script src="../js/Validations/jquery.validationEngine-en.js"></script>
-    	
+
 
     <script>
         var jq13 = jQuery.noConflict(true);
-</script>
-     <script>
-         jq13(document).ready(function () {
-             // binds form submission and fields to the validation engine
-             jq13("#form1").validationEngine();
-         });
-        </script>
+    </script>
+    <script>
+        jq13(document).ready(function () {
+            // binds form submission and fields to the validation engine
+            jq13("#form1").validationEngine();
+        });
+    </script>
 
     <%--    Validation Tools--%>
-   <link href="../css/bootstrap-modal-carousel.min.css" rel="stylesheet" />
+    <link href="../css/bootstrap-modal-carousel.min.css" rel="stylesheet" />
     <link href="../css/bootstrap.css" rel="stylesheet" />
-  
+
     <link href="../css/fitness.css" rel="stylesheet" />
-  
+
     <script src="../js/jquery-1.11.2.min.js"></script>
-  
+
     <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/bootstrap-modal-carousel.min.js"></script>
-     
-    
-  
+    <script src="../js/bootstrap-modal-carousel.min.js"></script>
+
+
+
     <script>
         $(".nav a").on("click", function () {
             if ($("li").hasClass('active')) {
@@ -49,9 +49,9 @@
             }
             $(this).addClass('active');
         });
-</script>
-    
-  <%-- <script>
+    </script>
+
+    <%-- <script>
        jQuery(document).ready(function () {
            // binds form submission and fields to the validation engine
            $(".successMsg").hide();
@@ -60,18 +60,18 @@
        });
    </script>--%>
 
-     <style>
+    <style>
      
 
 
 
  </style>
 
-    
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
-<body style=" margin-top: 0px;">
+<body style="margin-top: 0px;">
     <form id="form1" data-toggle="validator" runat="server">
         <div>
             <nav class="navbar navbar-default">
@@ -122,25 +122,27 @@
                                             <li><a href="../Admin/ViewOpinionPoll.aspx">View Poll</a></li>
                                         </ul>
                                     </li>
-                                     <li class="divider"></li>
-                                     <li><a href="../Admin/ScheduleEvents.aspx">Events</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="../Admin/ScheduleEvents.aspx">Events</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Trainee Data <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                            <li><a href="../Admin/EvalutionResult.aspx">Evalution</a></li>
-                                <li class="divider"></li>
-                            <li><a href="../Admin/FileUploads.aspx">Uploads</a></li>
-                                <li class="divider"></li>
-                            <li><a href="../Admin/Schedule.aspx">Schedule</a></li>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="../Admin/EvalutionResult.aspx">Evalution</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="../Admin/FileUploads.aspx">Uploads</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="../Admin/Schedule.aspx">Schedule</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="../Admin/VideoUploads.aspx">Video Uploads</a></li>
                                 </ul>
-                                </li>
+                            </li>
                             <li><a href="../Admin/AdminMessage.aspx">Message</a></li>
                             <li><a href="../ChangePassword.aspx">Settings</a></li>
 
 
-                          
+
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right">
@@ -154,16 +156,17 @@
             <div class="container">
                 <div class="col-md-3">
                     <section class="box widget locations">
-                         <div class="avatar">
+                        <div class="avatar">
                             <asp:Image ID="imgProfileImage" runat="server" Width="175" Height="175" />
                             <%--<img src="../images/nomale.png" height="175" width="175" />--%>
                         </div>
                         <div class="details">
-                            <div class="htitle" >Name</div>
-                            <p><asp:Label ID="lblUserName" runat="server"></asp:Label></p>
+                            <div class="htitle">Name</div>
+                            <p>
+                                <asp:Label ID="lblUserName" runat="server"></asp:Label></p>
 
                         </div>
-                        
+
                     </section>
                 </div>
                 <div class="col-md-9">

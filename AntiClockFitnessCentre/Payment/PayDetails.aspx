@@ -21,7 +21,7 @@
             <div class="login-form">
                 <article class="contentbox">
                     <br />
-                    <p><b>Rs.500</b> per year to maintain your health and fitness records</p>
+                    <p><b>Rs.499</b> per month for your health and fitness program. It covers free personal trainer,dietician and physiotherapy once a month</p>
                     <br />
                     <asp:Button ID="btnPaynow" runat="server" CssClass="btn btn-primary" Text="Pay Now" OnClick="btnPaynow_Click" />
                     <input type="button" class="btn btn-primary" name="btnCancel" value="Cancel" onclick="CancelFrm(); return false;" />

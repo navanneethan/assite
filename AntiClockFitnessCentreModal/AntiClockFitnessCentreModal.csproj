@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TrainingVideoModel.cs" />
     <Compile Include="FileUploadsModel.cs" />
     <Compile Include="MessageModal.cs" />
     <Compile Include="OpinionPollModal.cs" />

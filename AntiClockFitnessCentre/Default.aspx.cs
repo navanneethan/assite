@@ -16,5 +16,22 @@ namespace AntiClockFitnessCentre
             //Response.Redirect("~/Login.aspx");
             //}
         }
+
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtEmail.Text))
+            {
+                return;
+            }
+            if (string.IsNullOrEmpty(txtSubject.Text))
+            {
+                return;
+            }
+            if (string.IsNullOrEmpty(txtMessage.Text))
+            {
+                return;
+            }
+            AntiClockFitnessCenter.SendEmail("atsaipavipvtltd@gmail.com", txtSubject.Text+"-"+txtEmail.Text+"-"+txtName.Text, txtMessage.Text);
+        }
     }
 }

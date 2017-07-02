@@ -308,15 +308,8 @@ namespace AntiClockFitnessCentre.Trainee
                                 _buildTabContentFirst.Append(_StringModel.ToString());
                                 _buildTabContentFirst.Append(_StringSlider.ToString());
                             }
-
-
-
                         }
-
-
-
                         _buildTabContentFirst.Append("</div>");
-
                     }
                     else
                     {

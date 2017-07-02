@@ -25,4 +25,87 @@
 			</p>
 		</Body>
 	</Course>
+	<Subscription>
+		<Subject>AtSaiPavi - Subscription payment details</Subject>
+		<Body>
+			<html>
+				<body>
+					<table  cellpadding="0" cellspacing="0" border="0" style="width:100%;border: solid 1px #95c25b;
+            background: #fafafa; display: block; border-radius: 5px; overflow: hidden">
+
+						<tr style="width:100%;">
+							<td valign="top" align="left" bgcolor="#F5F5F5" height="50" style="font: normal 22px arial;
+                        color: #f61908; line-height: 50px; padding-top: 0; padding-right: 0; padding-bottom: 0;
+                        padding-left: 15px;border-bottom: solid 1px #95c25b;">
+								AtSaiPavi Health and Fitness pvt Ltd
+							</td>
+							<td  bgcolor="#F5F5F5" style="font: normal 12px arial; color: #000; text-align: right;
+                        padding-top: 0; padding-left: 0; padding-bottom: 0; padding-right: 20px;border-bottom: solid 1px #95c25b;">
+							</td>
+						</tr>
+						<tr style="width:100%;">
+							<td colspan="2" style="text-align:center;padding:10px;text-align:center;font-size:14px;">
+								<b>Subscription Receipt</b>
+							</td>
+						</tr>
+						<tr style="width:100%;">
+							<td colspan="2" style="text-align:center;padding:10px;">
+								<table  cellpadding="0" cellspacing="0" border="0" style="width:100%;border: solid 1px #95c25b;
+                            background: #fff;  border-radius: 2px; overflow: hidden">
+									<tbody >
+										<tr>
+											<td  style="font: normal 14px arial; color: #000; text-align: left;
+					  border-right: solid 1px #95c25b;width:50%;
+                        padding-top: 10px; padding-right: 0; padding-bottom: 10px; padding-left: 15px">
+												<b>Transaction ID:</b>
+											</td>
+											<td  style="font: normal 14px arial; color: #000; text-align: left;
+                        padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 20px">
+												<p>{0}</p>
+											</td>
+										</tr>
+
+										<tr>
+											<td  style="font: normal 14px arial; color: #000; text-align: left;
+					  border-right: solid 1px #95c25b;width:50%;border-top: solid 1px #95c25b;
+                        padding-top: 10px; padding-right: 0; padding-bottom: 10px; padding-left: 15px">
+												<b>Transaction Amount:</b>
+											</td>
+											<td  style="font: normal 14px arial; color: #000; text-align: left;border-top: solid 1px #95c25b;
+                        padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 20px">
+												<p>{1}</p>
+											</td>
+										</tr>
+										<tr>
+											<td  style="font: normal 14px arial; color: #000; text-align: left;
+					  border-right: solid 1px #95c25b;width:50%;border-top: solid 1px #95c25b;
+                        padding-top: 10px; padding-right: 0; padding-bottom: 10px; padding-left: 15px">
+												<b>Transaction Date:</b>
+											</td>
+											<td  style="font: normal 14px arial; color: #000; text-align: left;border-top: solid 1px #95c25b;
+                        padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 20px">
+												<p>{2}</p>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+							</td>
+						</tr>
+
+						<tr style="width:100%;">
+							<td colspan="2"  style="text-align:center;padding:0px 0px 15px 0px;font: normal 11px arial; color: #999; line-height: 12px">
+								<br />
+								You have received this mail as a member of <a href="www.atsaipavi.com">www.atsaipavi.com</a><br />
+								Please add <a href="mailto:support@atsaipavi.com" style="color: #0067ac; text-decoration: none;
+                            outline: none" target="_blank">support@atsaipavi.com</a> to your address
+								book to ensure delivery into your inbox.
+							</td>
+						</tr>
+
+					</table>
+				</body>
+			</html>
+		</Body>
+	</Subscription>
 </ACHF>
